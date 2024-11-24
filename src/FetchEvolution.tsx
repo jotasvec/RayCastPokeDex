@@ -21,7 +21,15 @@ function fetchEvoChain(ID:number) {
     const { isLoading, data, error} = usePromise<any>(
         async (url: string) => {
             try {
-                const response  = await (await axios(url)).data
+                const response  = await axios(url).then((resp) => {
+                    console.log('response data ', resp.data)
+                    console.log('response status ', resp.status)
+                    console.log('response statustext ', resp.statusText)
+                    return resp.data
+
+                }).catch(error => {
+                    console.error("error fetching axios data: ", error)
+                })
                 /* 
                 if (!response) {
                     throw new Error(`Failed to fetch: ${response}`)
@@ -31,6 +39,7 @@ function fetchEvoChain(ID:number) {
                 console.log('Fetched Result Data: ', result);
                 return result; */
                 return response
+
             } catch (error) {
                 console.error("error fetching data: ", error)
                 throw error
@@ -52,7 +61,7 @@ export function getEvolution(ID:number) {
     * buscar en la url de especies https://pokeapi.co/api/v2/pokemon-species/6/ 
     * el ID para usar en Evolution chain 
     */
-    // console.log('Data chain ->', data)
+    console.log('Data chain ->', data)
     /* if (error) {
         console.error("Error: ",error.message)
     } */

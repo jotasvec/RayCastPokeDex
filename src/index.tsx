@@ -10,8 +10,9 @@ export default function Command() {
   const { isLoading, data } = getPokemon();
 
   const speciesID = data?.species.url.split("/")[6];
-  const {isLoading: loading, chainEvolution: evolution} = getEvolution(speciesID)
-
+  const { isLoading: loading, chainEvolution } = getEvolution(speciesID)    
+  console.log('chainEvolution', chainEvolution)
+  
   // adding the data 
   const name = data?.name
   const weight = data?.weight
@@ -27,7 +28,7 @@ export default function Command() {
   isLoading={isLoading}   
   markdown={`
   # ${ name }
-  ![](${frontImg})
+  ![](${frontImg}?raycast-width=250&raycast-height=250)
   `} 
   navigationTitle={name}
   metadata={
@@ -44,7 +45,16 @@ export default function Command() {
         
       </Detail.Metadata.TagList>
       <Detail.Metadata.Separator />
-      <Detail.Metadata.Link title='Evolution Chain' target={`https://www.pokemon.com/us/pokedex/${name}`} text={evolution[0] || "Evolution "} />
+      <Detail.Metadata.TagList title='Evolution Chain'>
+        {
+          chainEvolution.map((evo: string) => {
+            if (name !== evo) {
+              return <Detail.Metadata.TagList.Item key={evo} text={evo} />
+            }
+          })
+        }
+      </Detail.Metadata.TagList>
+
     </Detail.Metadata>
   }
   />;
