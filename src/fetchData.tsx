@@ -1,7 +1,7 @@
 import { useFetch } from '@raycast/utils';
 
 const pokeRandom: number = Math.floor(Math.random()*150)+1 // random number between 1 and 151
-const pokeAPI: string = `https://pokeapi.co/api/v2/pokemon/${pokeRandom}/` //5 is Charmeleon
+const API: string = `https://pokeapi.co/api/v2/pokemon/` //5 is Charmeleon
 
 interface PokeResponse {
     isLoading: boolean; 
@@ -18,9 +18,15 @@ interface PokeData{
 
 
 
-export default function getPokemon() {
-    const { isLoading, data } = useFetch<any>(pokeAPI); 
+export function getPokemon() {
+    const { isLoading, data } = useFetch<any>(`${API}${pokeRandom}/`); 
 
+    //console.log('->', data);
+    return { isLoading, data }
+}
+
+export function getPokemonByName(name: string) {
+    const { isLoading, data } = useFetch<any>(`${API}${name}/`); 
     //console.log('->', data);
     return { isLoading, data }
 }

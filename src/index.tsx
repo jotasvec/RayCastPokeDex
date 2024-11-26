@@ -1,17 +1,32 @@
 import { Detail } from "@raycast/api";
-import getPokemon  from "./fetchData";
+import { getPokemon, getPokemonByName }  from "./fetchData";
 import { getEvolution } from "./FetchEvolution";
 import { Icon, List } from "@raycast/api";
 import { Colors, getColorByName } from "./Colors";
+import { EvolutionTag } from "./evolutionTag";
+import { useEffect, useState } from "react";
 
 
 
 export default function Command() {
+  //const [evoChainData, setEvoChainData] = useState<Record<string, any>[]>([])
   const { isLoading, data } = getPokemon();
-
-  const speciesID = data?.species.url.split("/")[6];
-  const { isLoading: loading, chainEvolution } = getEvolution(speciesID)    
+  const speciesID = data?.species?.url?.split("/")[6];
+  const { isLoading: loadingEvo, chainEvolution } = getEvolution(speciesID)    
   console.log('chainEvolution', chainEvolution)
+
+/*   useEffect(() => {
+    const fetchEvoData = async () => {
+      const fetchData = await Promise.all(
+        chainEvolution.map(async (evo: string) => {
+          const { data } = getPokemonByName(evo);
+          return { name: evo, data };
+        })
+      )
+      setEvoChainData(fetchData)
+    };
+    if(chainEvolution.length > 0) fetchEvoData();
+  }, [chainEvolution]); */
   
   // adding the data 
   const name = data?.name
@@ -22,13 +37,13 @@ export default function Command() {
   //console.log("evolution",evolution.length)
 
   
-  const frontImg = data?.sprites.other.dream_world.front_default //data?.sprites.other.dream_world.front_default (this is for the other PokeData source)
+  const frontImg: string = data?.sprites.other.dream_world.front_default //data?.sprites.other.dream_world.front_default (this is for the other PokeData source)
   
   return <Detail 
-  isLoading={isLoading}   
+  isLoading={isLoading || loadingEvo}   
   markdown={`
   # ${ name }
-  ![](${frontImg}?raycast-width=250&raycast-height=250)
+  ![${name}](${frontImg}?raycast-width=250&raycast-height=250)
   `} 
   navigationTitle={name}
   metadata={
@@ -47,10 +62,10 @@ export default function Command() {
       <Detail.Metadata.Separator />
       <Detail.Metadata.TagList title='Evolution Chain'>
         {
-          chainEvolution.map((evo: string) => {
-            if (name !== evo) {
-              return <Detail.Metadata.TagList.Item key={evo} text={evo} />
-            }
+          chainEvolution.map((evo) => {
+            console.log('evo ???', evo)
+            return <EvolutionTag key={evo} evolutionChainName={evo} currentName={name} />
+           
           })
         }
       </Detail.Metadata.TagList>
