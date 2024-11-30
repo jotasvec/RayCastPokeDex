@@ -9,13 +9,14 @@ export function EvolutionTag({evolutionChainName, currentName}:{evolutionChainNa
 
     if (isLoading) return null;
     //console.log('specie',specie)
-    const specieType = specie?.types?.type || []
+    const specieType = specie?.types
     const specieIcon = specie?.sprites?.front_default
-    const colorName = specieType?.name ? getColorByName(specieType?.name) : Colors.unknow
-
+    
+    const colorName = !specieType?.type ? getColorByName(specieType[0]?.type?.name) : Colors.unknow
+    console.log('colorName', colorName)
 
     return currentName !== specie?.name ? 
-        (<Detail.Metadata.TagList.Item key={specie?.name} icon={specieIcon } text={`${specie?.name}`} color={colorName} />) :
-        (<Detail.Metadata.TagList.Item key={currentName} text={`${currentName} has no evolutions chain`} />);
+        (<Detail.Metadata.TagList.Item key={specie?.name} icon={specieIcon } text={`${specie?.name}`} color={colorName} />) : ''
+
 
 }

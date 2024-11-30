@@ -15,18 +15,6 @@ export default function Command() {
   const { isLoading: loadingEvo, chainEvolution } = getEvolution(speciesID)    
   console.log('chainEvolution', chainEvolution)
 
-/*   useEffect(() => {
-    const fetchEvoData = async () => {
-      const fetchData = await Promise.all(
-        chainEvolution.map(async (evo: string) => {
-          const { data } = getPokemonByName(evo);
-          return { name: evo, data };
-        })
-      )
-      setEvoChainData(fetchData)
-    };
-    if(chainEvolution.length > 0) fetchEvoData();
-  }, [chainEvolution]); */
   
   // adding the data 
   const name = data?.name
@@ -62,11 +50,15 @@ export default function Command() {
       <Detail.Metadata.Separator />
       <Detail.Metadata.TagList title='Evolution Chain'>
         {
-          chainEvolution.map((evo) => {
-            console.log('evo ???', evo)
-            return <EvolutionTag key={evo} evolutionChainName={evo} currentName={name} />
-           
-          })
+          chainEvolution.length > 1 ? (
+            chainEvolution.map((evo) => {
+              console.log('evo ???', evo)
+              return <EvolutionTag key={evo} evolutionChainName={evo} currentName={name} />
+             
+            })
+          ):(
+            <Detail.Metadata.TagList.Item key={name} text={`${name} has no evolutions chain`} />
+          )
         }
       </Detail.Metadata.TagList>
 

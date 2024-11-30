@@ -13,6 +13,8 @@ interface PokeData{
     sprites: object;
     front_default: string;
     species: object;
+    type: object;
+    types: object;
 
   }  
 

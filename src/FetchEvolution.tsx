@@ -9,7 +9,7 @@ interface PokeResponse {
     data?: object;
     evolution: object;
     species: object;
-    evolves_to: object;
+    evolves_to?: object;
     evolution_details: object;
     name: string;
     result: object;
@@ -74,7 +74,7 @@ export function getEvolution(ID:number) {
             chainEvolution.push(chain_base)
         }
 
-        if (evolves_to?.length){
+        if (evolves_to?.length !== 0){
             const evo: string = data?.chain?.evolves_to[0]?.species?.name
             if(evo){
                 chainEvolution.push(evo)
@@ -82,7 +82,7 @@ export function getEvolution(ID:number) {
             }
         }
 
-        if (data?.chain?.evolves_to[0]?.evolves_to[0]?.length){
+        if (data?.chain?.evolves_to[0]?.evolves_to[0]?.length !== 0){
             const evo2: string = data?.chain?.evolves_to[0]?.evolves_to[0]?.species?.name
         
             if(evo2){     
