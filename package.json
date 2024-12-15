@@ -2,7 +2,7 @@
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "pokedex",
   "title": "pokedex",
-  "description": "Raycast externsion for search pokemons ",
+  "description": "Raycast extension for search pokemons",
   "icon": "command-icon.png",
   "author": "jotasvec",
   "categories": [
@@ -15,8 +15,19 @@
     {
       "name": "index",
       "title": "pokedex",
-      "description": "Show Pokemon details ",
-      "mode": "view"
+      "description": "Show Pokemon details",
+      "mode": "view",
+      "arguments": [
+        {
+          "name": "pokemonNameORNumber",
+          "type": "text",
+          "label": "name",
+          "placeholder": "name / number / random",
+          "required": false,
+          "description": "Search Pokemon By Name",
+          "default": false
+        }
+      ]
     }
   ],
   "dependencies": {

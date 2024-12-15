@@ -16,7 +16,9 @@ export function EvolutionTag({evolutionChainName, currentName}:{evolutionChainNa
     console.log('colorName', colorName)
 
     return currentName !== specie?.name ? 
-        (<Detail.Metadata.TagList.Item key={specie?.name} icon={specieIcon } text={`${specie?.name}`} color={colorName} />) : ''
+        (
+            <Detail.Metadata.TagList.Item key={specie?.name} icon={specieIcon } text={`${specie?.name}`} color={colorName} />
+        ) : ''
 
 
 }

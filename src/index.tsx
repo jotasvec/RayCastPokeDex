@@ -1,4 +1,4 @@
-import { Detail } from "@raycast/api";
+import { Detail, LaunchProps } from "@raycast/api";
 import { getPokemon, getPokemonByName }  from "./fetchData";
 import { getEvolution } from "./FetchEvolution";
 import { Icon, List } from "@raycast/api";
@@ -7,15 +7,20 @@ import { EvolutionTag } from "./evolutionTag";
 import { useEffect, useState } from "react";
 
 
+interface pokemonArgument{
+  pokemonNameORNumber: string;
+}
 
-export default function Command() {
+
+export default function Command(props: LaunchProps<{arguments: pokemonArgument}>) {
   //const [evoChainData, setEvoChainData] = useState<Record<string, any>[]>([])
-  const { isLoading, data } = getPokemon();
+  const nameORNumber = props.arguments.pokemonNameORNumber;
+  console.log('props.arguments.name', nameORNumber)
+  const { isLoading, data } = getPokemon(nameORNumber);
   const speciesID = data?.species?.url?.split("/")[6];
   const { isLoading: loadingEvo, chainEvolution } = getEvolution(speciesID)    
   console.log('chainEvolution', chainEvolution)
 
-  
   // adding the data 
   const name = data?.name
   const weight = data?.weight

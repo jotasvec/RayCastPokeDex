@@ -20,8 +20,10 @@ interface PokeData{
 
 
 
-export function getPokemon() {
-    const { isLoading, data } = useFetch<any>(`${API}${pokeRandom}/`); 
+export function getPokemon(nameORNumber: string ) {
+    
+    const url: string = nameORNumber ? `${API}${nameORNumber}/` : `${API}${pokeRandom}/`; 
+    const { isLoading, data } = useFetch<any>(url); 
 
     //console.log('->', data);
     return { isLoading, data }
