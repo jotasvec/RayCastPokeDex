@@ -17,7 +17,7 @@ function getEvolutionChain(ID:number) {
     /*
     * TODO: hay que buscar dentro desde la url de pokemon 
     * buscar en la url de especies https://pokeapi.co/api/v2/pokemon-species/6/ 
-    * el ID para usar en Evolution chain 
+    * el ID para usar en Evo lution chain 
     */
 
     // geting evolution chain number to use it on fetchEvolution url
